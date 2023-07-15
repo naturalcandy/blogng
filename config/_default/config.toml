@@ -1,0 +1,7 @@
+# -- Site Configuration --
+
+baseURL = "https://naturalcandy.github.io/blogng/"
+defaultContentLanguage = "en"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
