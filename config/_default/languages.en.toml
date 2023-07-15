@@ -1,0 +1,28 @@
+languageCode = "en"
+languageName = "English"
+weight = 1
+
+title = "home:~$ cd blogNG"
+# copyright = "Copy, _right?_ :thinking_face:"
+
+[params]
+  isoCode = "en"
+  displayName = "EN"
+  rtl = false
+
+  dateFormat = "2 January 2006"
+
+  mainSections = ["Blog"]
+  # description = "My awesome website"
+
+
+
+[author]
+  name = "Noli Gerawork"
+  image = "img/pls.png"
+  headline = "We like to do a little blogNG here."
+  bio = "Hi there!"
+  links = [
+     { link = "https://naturalcandy.github.io/nolawi-portfolio/" },
+     { github = "https://github.com/naturalcandy"}
+  ]
