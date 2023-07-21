@@ -208,7 +208,7 @@ const productSchema = () => objectType({
 }, ["product"]);
 ```
 
-A lot more easy on the eyes, right? And we can even add to add a dummy documentation field as our metadata! The improved readability becomes more pronounced as we deal with larger and more complex schemas.
+A lot more easy on the eyes, right? And we can even add a dummy documentation field as our metadata! The improved readability becomes more pronounced as we deal with larger and more complex schemas.
 
 Now, let's take a look at the function definitions that help us create this transformed schema:
 
