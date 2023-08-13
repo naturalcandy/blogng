@@ -1,243 +1,98 @@
 ---
-title: '"DSL Transformations": A Simple Solution to Hierarchical JSON Schemas?'
+title: "Why is Obsidian My Go-To Tool for Learning and Productivity?"
 date: 2023-07-18T14:59:06-04:00
 draft: false
-tags: ["Technology", "Programming", "Functional Programming", "Javascript", "TypeScript"]
-summary: "Explore the application of DSL transformations for preserving hierarchical rules and metadata in JSON schemas while simultaneously enhancing their usability through structural simplification." 
+tags: ["Personal Development", "Tools", "Technology"]
+summary: "This post explores my use of Obsidian, a markdown-based note-taking tool, for long-term learning. I highlight some of its key features and assess its suitability for diverse learning interests."
+coverCaption: "[Obsidian Logo](https://commons.wikimedia.org/wiki/File:Obsidian_software_logo.svg) by [Obsidian(Software)](https://obsidian.md/), CC BY-SA 4.0, via Wikimedia Commons"
 ---
 
-I've recently found myself working with some pretty large and hierarchical JSON Schema data. I quickly came to notice that navigating, updating, or any other form of interaction with schema data felt like getting lost in a convoluted maze—especially when the schemas, ironically, become more complex than the JSON data they're meant to model. Trust me, once you're five levels deep, it's already over for you.
+We've all experienced it: learning something fascinating, acing the exam, and then forgetting it all. Those valuable insights get buried, never to be seen again. Welcome to the world of Obsidian, a solution that turns fleeting notes into an enduring tapestry of interconnected ideas.
 
-In this post, I'm going to share how you can employ functional programming concepts to create a Domain-Specific Language (DSL). This approach simplifies complex schemas, transforming them into equivalent but less verbose, and far more intuitive structural representations. The end result? Making schemas easier to work with within the development landscape.
+## What is Obsidian?
 
-{{< lead >}}
-From reducing thousands of lines of data to only a few hundred. Now that's pretty nice.
-{{< /lead >}}
+Obsidian is more than just an open-source, markdown-based note-taking app. It's a unique digital workspace designed to link thoughts and ideas, turning scattered notes into a coherent knowledge base that stands out from your typical note-taking solutions.
 
-## What are JSON Schemas?
+### What are its core features?
 
-JSON Schemas are a vocabulary that allows you to annotate and validate JSON documents, offering a contract for the shape and structure of a JSON object. It's like a type system for JSON. The core of this "contract" is described through sets and boolean logic.
+Let's dive into what makes Obsidian a powerful ally in your learning adventure:
 
-### What's their Purpose?
+1. **Markdown Based Note-taking**
+Simple and elegant, Obsidian lets you write in markdown format. If you're new to markdown, here's a handy [guide](https://www.markdownguide.org/).
+2. **Linking Notes**
+The heart of Obsidian, linking notes allows you to create a web of interconnected ideas. It's bidirectional, meaning linking from Note A to Note B also shows a backlink from Note B to Note A.
+3. **Plug-ins**  
+Obsidian being an open source tool has a rich ecosystem that allows you to add extra features to the software. These can range from simple formatting tools to complex data visualization utilities.
 
-JSON Schemas serve to ensure data integrity and consistency, particularly when exchanging JSON data between systems. By defining a JSON Schema, you can ensure that the data you send or receive has the correct structure and context, which can prevent errors and bugs. But schemas on their own just provide a valuable blueprint for how JSON should be structured. The inclusion of JSON Schema validation libraries are the actual tools for implementing the validation logic that is defined by the JSON Schema. Some examples are, [Ajv](https://github.com/ajv-validator/ajv) and [jsonschema](https://github.com/python-jsonschema/jsonschema). 
+## How do I use Obsidian?
 
-### What Does a Simple JSON Schema Look Like?
+Here's how I use Obsidian for long-term learning, focusing on three principles:
 
-Let's take a look at this JSON Schema, for example:
+* **Markdown Hierarchy**: Organizing notes with headings and subheadings.
+* **The Zettelkasten Technique**: A method of linking individual notes or ideas.
+* **Spaced Repetition**: A study method for reinforcing retention.
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "name": { "type": "string" },
-    "age": { "type": "integer", "minimum": 0 },
-    "city": { "type": "string"},
-    "hobbies": { 
-      "type": "array",
-      "items": { 
-        "anyOf": [
-          { "type": "string" },
-          { "type": "number" }
-        ]
-      } 
-    }
-  },
-  "required": ["name", "age"]
-}
-```
+![My cache notes](notes1.png "My cache notes from my Computer Systems Class")
 
-This JSON Schema describes an object with these conditions:
+### How can we use the Markdown Hierarchy?
 
-* The object contains a `name` property which is a string.
-* The object contains an `age` property which is an integer, its minimum value being 0.
-* The object contains a `hobbies` which if present, should be an array. The elements of this array can either be a string or a number.
-* The properties name and age must be present. Other properties (`city`, and `hobbies`), are optional.
+First thing you notice when looking at my notes is that they're pretty easy on the eyes. One of the very simple, but I think really important benefits of Obsidian is that it hides text with lower priority headings under higher priority headings. This simple feature allows me to navigate my notes efficiently, zeroing in on relevant information specific to my query, without unnecessary distractions.
 
-Any JSON that follows these constraints will be verified by JSON Schema validation libraries.
+Another distinctive feature of my notes is that all the headers for different topics are framed as questions. Whether you're glancing at the headings within my notes or the titles of my blog posts, you'll quickly discern a pattern: I'm someone who is particularly fond to questions.
 
-### What Challenges Arise with JSON Schemas for Deeply Nested Data?
+Whenever I consult my notes its almost always because I have a question in mind. I'm a question thinker, so it just clicks to shape my notes as a set of questions rather than composing them in a declarative manner. This way, I skip the extra task of figuring out if a chunk of my notes really answers the question I'm wrestling with.
 
-JSON Schemas require additional fields to ensure proper validation of JSON data. Consequently, schemas for even seemingly simple JSON objects can become complex when data becomes increasingly hierarchical.
+So lets say I want to focus on optimizing my code for better cache utilization. Well just by clicking on my last heading I can get:
 
-Consider the following JSON object:
+![My cache notes](notes2.png "My cache notes")
 
-```json
-{
-  "company": {
-    "name": "ABC Corp",
-    "address": {
-      "street": "123 Anywhere St",
-      "city": "New York",
-      "country": "USA"
-    },
-    "employees": [
-      {
-        "firstName": "John",
-        "lastName": "Doe",
-        "position": "Developer"
-      },
-      {
-        "firstName": "Jane",
-        "lastName": "Smith",
-        "position": "Designer"
-      }
-    ]
-  }
-}
-```
+And from here I can continue to use headings to further navigate to more specific areas of notes that I think can help me anser my question.
 
-Pretty straightforward, right? Let's look at its schema now.
+### How can we use the Zettelkasten technique?
 
-```json
-{
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "type": "object",
-  "properties": {
-    "company": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "address": {
-          "type": "object",
-          "properties": {
-            "street": { "type": "string" },
-            "city": { "type": "string" },
-            "country": { "type": "string" }
-          },
-          "required": ["street", "city", "country"]
-        },
-        "employees": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "firstName": { "type": "string" },
-              "lastName": { "type": "string" },
-              "position": { "type": "string" }
-            },
-            "required": ["firstName", "lastName", "position"]
-          }
-        }
-      },
-      "required": ["name", "address", "employees"]
-    }
-  },
-  "required": ["company"]
-}
-```
+The Zettelkasten method, an index card knowledge management system, uses individual notes or "Zettels" to represent single ideas. These notes are linked in a non-hierarchical network, allowing complex relationships between ideas.
 
-*Yikes*. Despite the object's simple structure, the schema is complex due to the need to define each nested level's type, properties, and other additional metadata supported by JSON Schema. This complexity drastically escalates with deeply nested JSON structures. But for your sake, I will omit such examples.
+Obsidian integrates this method with its linking system. A link within a note is formatted as:
 
-### Why can't we achieve simplification through flattening/NoSQL?
+    [[Name of Note #(optional)text to link to |(optional)Link appearance]]
 
-Flattening and using NoSQL databases is a strategy typically used for dealing with hierarchical JSON data itself, but it doesn't address the complexity of the associated JSON Schemas. Unlike regular JSON, JSON Schemas present a unique challenge when it comes to simplification, as they don't represent data but rather the **structure, relationships, and constraints** of that data. This means JSON schemas contain valuable metadata and rules for validation that might be lost or become even more complicated when the data is flattened or stored in a NoSQL database.
+While the structure of links may initially appear complex, they are elegantly composed of three distinct components:
 
-Thus we must find a way to simplify JSON Schemas while also ensuring that the result of our simplification maintains the original validity rules.
+1. **Linked File's Name**: The specific file you want to link to.
+2. **Optional Heading or Text Block Identifier**: Utilize # to link to a specific heading or ^ to link to a particular text block within the file.
+3. **Optional Customization**: Use | to personalize how the link appears in the editor.
 
-## What is the Concept of DSL/DSL Transformations in JSON Schemas?
+For instance, a link crafted like this:
 
-This is where the concept of a Domain-Specific Language (DSL) comes in. A DSL is a specialized programming language designed to make certain tasks easier or more intuitive for people working within a specific domain. In our case, we're focused on assisting developers, the frequent users of JSON Schemas, by designing a DSL that expresses schemas less verbosely and more intuitively, without sacrificing underlying semantics.
+                    [[Example#Test|This is an example link]]
 
-Now I said I dislike dealing with deeply hierarchical data, but computers love that stuff. So we need to introduce something called a DSL transformation to address this. You can think of a DSL transformation as a sort of translator that translates the information being conveyed by machine-readable datastructures (deeply nested illegible JSON Schemas that I never want to see again in this case) to our more human-readable DSL code.
+Would look like this in the editor:
 
-Using a more formal definition, consider you have two sets. Set {{< katex >}} \\(S\\) which represents all of the possible JSON Schemas and another set {{< katex >}} \\(D\\) of our domain-specific language expressions.
+![An example](notes3.png "An example")
 
-A DSL can be seen as a subset of \\(D\\) pertinent to a specific application. Specifically in this application, the DSL represents one simplified version of JSON Schemas.
+Upon clicking, it would seamlessly navigate to the heading `Test` within the note titled `Example`, as illustrated below:
+![An example](notes4.png "An example")
 
-And a well formed DSL transformation is a function {{< katex >}} \\(f\\) that maps each element in set \\(S\\) (our JSON Schema) to set \\(D\\) (our DSL).
+When I dive into learning something new, my journey begins with a single note filled with everything I find vital. I never fret about clutter or chaos, for the magic happens in the next step: organizing these notes.
 
-### Can We Apply Functional Programming Concepts in Writing DSL Transformations?
+I return to my scattered thoughts and sift through the various topics I've explored. If a subject calls for special attention, I craft a separate file and link to it using Obsidian's link feature. This process is emblematic of the Zettelkasten technique.
 
-Functional programming, anchored in mathematical functions, is ideal for transforming data due to its predictable and testable nature, precisely what we need for JSON Schemas.
+It's more than mere note-taking; it's a dance of understanding, connecting, and weaving intricate relationships between concepts. It's not just about retaining information; it's about building a robust and lasting foundation for learning. This revision emphasizes the importance of reviewing and connecting notes, highlighting that the real learning occurs in the process of organizing and linking, rather than simply jotting down information.
 
-We can leverage [Higher Order Functions](https://en.wikipedia.org/wiki/Higher-order_function) (HOFs), that accept or return other functions, making our code more modular and maintainable. We also preserve and easily add to JSON schema rules by passing metadata as function parameters, presenting a more comprehensible view compared to JSON schema's nested hierarchy.
+### How can we use Spaced Repetition?
 
-Moreover, we utilize [lazy evaluation](https://en.wikipedia.org/wiki/Lazy_evaluation#:~:text=In%20programming%20language%20theory%2C%20lazy,by%20the%20use%20of%20sharing), postponing computations until needed, saving resources and enhancing performance with complex data.
+But of course there times when memorization is essential—those finals are no joke. That's when Spaced Repetition becomes more than a study tool; it's a lifeline. Spaced Repetition involves reviewing learned material at increasing intervals, making the information stick. It's not just a theory; it's backed by solid research.
 
-As JSON Schema has a recursive structure, akin to multiple function compositions, this approach suits it perfectly. And one thing to note is that the application of functional programming concepts won't inherently "flatten" the schema. Rather, they will provide a different and more intuitive way of defining and manipulating the schema. It abstracts away some of the complexities involved in constructing a JSON schema, especially those that arise from deep nesting.
+Now, for Obsidian users, we can thank its rich plugin ecosystem to give us something special: a well-crafted Spaced Repetition plugin that integrates seamlessly with Obsidian. You can explore this fantastic tool [here](https://github.com/st3v3nmw/obsidian-spaced-repetition).
 
-### How Can DSL Transformation Simplify JSON Schema Structure?
+![A flashcard from when I was first learning C++](notes5.png "A flashcard from when I was first learning C++")
 
-Let's take a look at the following JSON Schema describing the object `product`:
+This Spaced Repitition Plugin allows you to easily create your flashcards from within the Obsidian editor. You'll be prompted with a question from your flashcard set, and you have the option to reveal the answer. Once revealed, you can rate the difficulty of the question, and this rating helps determine when you'll be prompted with that question again.
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "product": {
-      "type": "object",
-      "properties": {
-        "name": { "type": "string" },
-        "description": { "type": "string" },
-        "price": { "type": "number" },
-        "tags": {
-          "type": "array",
-          "items": { "type": "string" }
-        },
-        "manufacturer": {
-          "type": "object",
-          "properties": {
-            "name": { "type": "string" },
-            "address": { "type": "string" }
-          },
-          "required": ["name", "address"]
-        }
-      },
-      "required": ["name", "description", "price"]
-    }
-  },
-  "required": ["product"]
-}
-```
+You can actually augment the algorithim that it uses to determine when to asses you to further suit it to your learning experience.
 
-While not overly complicated, it can still be tricky to comprehend at a glance. Now using a functional programming appraoch we can simplify the JSON Schema into a more digestible representation:
+I'm a firm believer in choosing plugins that fit your unique needs, but this one feels different. If you're using Obsidian for note-taking or long-term learning, I find this plugin to be more than just handy; I see it as essential.
 
-```javascript
-const productSchema = () => objectType({
-  product: () => objectType({
-    name: stringType({ example: "Example Product" }),
-    description: stringType({ example: "This is an example product" }),
-    price: numberType({ example: 20 }),
-    tags: arrayType(stringType),
-    manufacturer: () => objectType({
-      name: stringType({ example: "Manufacturer Name" }),
-      address: stringType({ example: "123 Example St" })
-    }, ["name", "address"])
-  }, ["name", "description", "price"])
-}, ["product"]);
-```
+## Last Thoughts?
 
-A lot more easy on the eyes, right? And we can even add a dummy documentation field as our metadata! The improved readability becomes more pronounced as we deal with larger and more complex schemas.
-
-Now, let's take a look at the function definitions that help us create this transformed schema:
-
-```javascript
-const objectType = (properties, required=[]) => ({
-  type: 'object',
-  properties: Object.fromEntries(
-    Object.entries(properties).map(([key, value]) => [key, value()]),
-  ),
-  required
-});
-
-const arrayType = items => () => ({ type: 'array', items: items() });
-
-const stringType = (metadata = {}) => () => ({ type: 'string', ...metadata });
-
-const numberType = (metadata = {}) => () => ({ type: 'number', ...metadata });
-```
-
-Each of these functions plays a crucial role:
-
-* `objectType`: A HOF that forms an object in the schema using properties and required fields as arguments, mapping directly to nested structures in the original JSON Schema.
-* `arrayType`: An HOF that defines an array type, taking a function as an argument to specify the item type, echoing the array definitions in the original schema.
-* `stringType` and `numberType`: HOFs representing string and number types respectively, accepting metadata as an argument to enhance schema context, analogous to basic type definitions in the original schema.
-
-{{< alert "check" >}}
-And there you have it! Our own DSL representation of JSON Schemas.
-{{< /alert >}}
-
-While being very limited, this example showcases a functional programming approach for representing schemas in a stucturally streamlined way, while presserving the underlying data. And to access the original schema? Simply invoke `productSchema()` with `()` as our placeholder argument. This smart move lets us harness the power of lazy evaluation.
-
-While this example is limited, it showcases how the declarative, modular nature of this approach empowers us to simplify and clarify schema definitions, thereby enhancing understandability, flexibility, and testability. The functions, acting as building blocks, make it straightforward to build complex schemas as they mirror the structure of the schema itself, from primitive to recursive types.
+Obsidian offers a unique approach to note-taking, turning scattered thoughts into a connected knowledge base. Whether you're a student, researcher, or lifelong learner, give Obsidian a try and discover a new way to learn and remember. Start your journey [here](https://obsidian.md/plugins).
