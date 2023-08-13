@@ -239,7 +239,7 @@ Each of these functions plays a crucial role:
 
 * `objectType`: A HOF that forms an object in the schema using properties and required fields as arguments, mapping directly to nested structures in the original JSON Schema.
 * `arrayType`: An HOF that defines an array type, taking a function as an argument to specify the item type, echoing the array definitions in the original schema.
-* `stringType`: HOFs representing  thestring type, accepting metadata as an argument to enhance schema context, analogous to basic type definitions in the original schema.
+* `stringType`: HOFs representing  the string type, accepting metadata as an argument to enhance schema context, analogous to basic type definitions in the original schema.
 
 {{< alert "check" >}}
 And there you have it! Our own DSL representation of JSON Schemas.
