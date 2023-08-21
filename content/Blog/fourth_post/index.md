@@ -445,7 +445,7 @@ def bfs_graphBLAS(M, v, target):
 There are many existing libraries that make it easy to compute graph algorithms. Why does GraphBLAS matter?
 
 1. **Efficiency in Sparse Graphs**
-    - GraphBLAS defines operations over sparse matrixes and vectors, focusing only on existing edges. In most real scenarios, the graphs we end deal with are sparse. GraphBLAS is specialized to handle such datastructures.
+    - GraphBLAS defines operations over sparse matrixes and vectors, focusing only on existing edges. In most real world scenarios, the graphs we end up dealing with are sparse. GraphBLAS is specialized to handle such datastructures.
 2. **Potentials for Parallelism**
     - Matrix operations are inherently parallelizable. GraphBLAS's use of matrix-vector multiplication opens up possibilities for parallel processing, potentially leading to faster computations on multi-core processors.
 3. **Flexibility in Algorithm Design**
