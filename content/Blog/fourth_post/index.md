@@ -44,7 +44,7 @@ def bfs_graphBLAS(M, v, target):  #my implementation leveraging graphBLAS
     return True
 ```
 
-While the traditional BFS algorithm is straightforward to articulate, the complexity increases with more intricate graph algorithms. Writing these algorithms, especially in a parallel computing environment, becomes increasingly challenging when focusing on a node and edge-centric model (Tim Davis).
+While the traditional BFS algorithm is straightforward to articulate, the complexity increases with more intricate graph algorithms. Writing these algorithms, especially in a parallel computing environment, becomes increasingly challenging when focusing on a node and edge-centric model.
 
 What if we could leverage the established mathematics of linear algebra to approach graph algorithms in a new way? What if we could view graphs as vector spaces and use isomorphisms to translate graph problems into the language of linear algebra? This perspective opens up a whole new world of possibilities and leads us to a powerful tool: GraphBLAS
 
