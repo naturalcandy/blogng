@@ -12,7 +12,7 @@ When I first learned about parallel computing I I assumed it was a one-size-fits
 
 Parallel computing speeds up problem-solving by dividing a large task into smaller sub-tasks and executing them concurrently across multiple processors. To illustrate its benefits and limitations, let's do a little case study on a problem some people have definetly encountered on their Leetcode grind: the maximum subarray sum problem.
 
-## What is the maximum subarray sum problem?
+## What is the Maximum Subarray Sum Problem?
 
 We can define the maximum subarray sum problem (`mss`) as follows: Given a sequence of integers, the maximum subarray sum problem requires finding the contiguous subsequence of the sequence with the maximum total sum, i.e.
 {{< katex >}}
@@ -46,7 +46,7 @@ You'll often hear me use the terms "work" and "span." Work refers to the total n
 {{< /alert >}}
 
 
-### What is the Divide And Conquer Approach?
+### What is the Divide And Conquer approach?
 
 We can also have a different approach, using the divide and conquer method. The main idea to take note of is that given an array, we know that the maximum subarray must lie in one of these three regions:
 
@@ -142,7 +142,7 @@ $$
 
 In simple terms, each recursive call splits the array into two halves. With parallel processing, we only need to consider the time taken by the longest of the two halves. Since we're assuming an infinite number of processors, each level of recursion takes constant time. Therefore, the span is `O(logn)`.
 
-### What is granularity and how can it imapct the benefits we have of parallelism?
+### What Is Granularity And How Can It Imapct The Benefits We Get From Parallelism?
 
 Now an improvement from `O(n)` to `O(logn)` sounds incredible. But of course, we are only talking about a theorical scenario. In practice, we have to consider 'granularity,' which refers to the size of the smallest tasks executed in parallel.
 
@@ -151,7 +151,7 @@ Now an improvement from `O(n)` to `O(logn)` sounds incredible. But of course, we
 
 Striking the right balance is crucial because, in a system with many cores, tasks can compete for resources, causing bottlenecks and diminishing the benefits of parallelism.
 
-### A hybrid approach? Creating a parallel and sequential algorithm
+### A Hybrid Approach? Creating a Parallel And Sequential Algorithm
 
 Defining an optimal granularity threshold allows for a balanced interplay between parallel and sequential processing. For larger problem sizes that can benefit from parallelism, the algorithm employs multiple cores, thereby minimizing overhead and enhancing data locality. As the recursion deepens and sub-problems become smaller, we can switch to a sequential algorithim. This transition ensures better load balancing and adaptability, particularly when the overhead of parallelism would outweigh its benefits. This hybrid strategy aims to optimize both parallel and sequential processing capabilities, minimizing overhead and maximizing efficiency.
 
@@ -203,7 +203,7 @@ int adaptive_mss(const std::vector<int>& arr) {
 }
 ```
 
-### The experiment: How can we measure the impact of granularity?
+### The Experiment: How Can We Measure The Impact Of Granularity On Performance?
 
 I decided to utilize speedup graphs to showcase impact of granularity. To generate the speedup graphs, I wrote a shell script that executed our algorithm on a fixed array size of 10 million elements while varying the number of processors. I averaged the execution times over multiple runs for accuracy. Then, I wrote a Python script to plot these average times against the number of processors. Here are some of the results:
 
@@ -227,7 +227,7 @@ The execution time of a purely parallel algorithm is slower by *over one order m
 Parallelism is not a universal solution. While it has the potential to speed up computations, improper handling of factors like granularity leads to suboptimal performance or even slower runtimes than a hybrid/sequential algorithm.
 {{< /alert >}}
 
-### How can we determine an optimal granularity limit of an algorithm?
+### How Can We Determine An Optimal Granularity Limit Of An Algorithm?
 
 In computational science and engineering, parallelism epitomizes a classic trade-off problem. And as shown in this blog post, one critical variable in this equation is granularity, which serves as a representation of this trade-off. The challenge then becomes identifying an optimal granularity level that is tailored to both the computational task and the specific hardware environment. Unfortunately, there isn't a convenient formula for determining the granularity limit. It all comes down to one thing:
 
