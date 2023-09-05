@@ -12,7 +12,7 @@ When I first learned about parallel computing I I assumed it was a one-size-fits
 
 Parallel computing speeds up problem-solving by dividing a large task into smaller sub-tasks and executing them concurrently across multiple processors. To illustrate its benefits and limitations, let's do a little case study on a problem some people have definetly encountered on their Leetcode grind: the maximum subarray sum problem.
 
-## What is the Maximum Subarray Sum Problem?
+### What is the Maximum Subarray Sum Problem?
 
 We can define the maximum subarray sum problem (`mss`) as follows: Given a sequence of integers, the maximum subarray sum problem requires finding the contiguous subsequence of the sequence with the maximum total sum, i.e.
 {{< katex >}}
