@@ -165,7 +165,7 @@ W(n) = 2 * W(n / 2) + c_k
 $$
 Or in other words at every level of recursion we make two recursive calls on problem sizes that are half the size of our original problem plus some constant work being done (\\(c_k\\)).
 
-A node representing a problem state at a given level \\(i\\) (parent node) will take about \\(c_k\\) work (the non-recursive portion of our recurrence). While the children nodes at level \\(i + 1\\)—since we are recursively calling twice for each parent at level \\(i\\), will take about \\(c_k * 2\\) work. Thus we know the recurrence will be dominated by the work done at the children nodes—the recurrence is "leaf dominated"—and in order to find the total cost expressed by this recurrence we can just calculate the total cost of all the children nodes.
+A node representing a problem state at a given level \\(i\\) (parent node) will take about \\(c_k\\) work (the non-recursive portion of our recurrence). While the children nodes at level \\(i + 1\\)—since we are recursively calling twice for each parent at level \\(i\\)—will take about \\(c_k * 2\\) work. Thus we know the recurrence will be dominated by the work done at the children nodes—the recurrence is "leaf dominated"—and in order to find the total cost expressed by this recurrence we can just calculate the total cost of all the children nodes.
 
 Given we are halving our input size at every recursive level we will have \\(logn\\) levels of recursion. At each level we will have \\(2^i\\) instances of our problem with each of them being size \\(n/2^i\\). Thus the cost of one level is: \\(2^i * n/2^i = n\\). Note that we have \\(logn\\) levels with each level costing about \\(n\\): the overall work complexity is in \\(O(nlogn)\\).
 
@@ -179,7 +179,7 @@ $$
 The second step follows by the definition of [asymptotic complexity](https://en.wikipedia.org/wiki/Asymptotic_computational_complexity), where \\(c_m\\) and \\(c_k\\) are constants.
 {{< /alert >}}
 
-A node representing a problem state at a given level \\(i\\) (parent node) will take about \\(n\\) work. While the node for its only child at level \\(i + 1\\)—since we are recursively calling once—will take about \\(n/2\\) work. Thus, we can conclude that the overall work of our Contraction approach is dominated by the root node, resulting in an \\(O(n)\\) work complexity. A lot better than \\(O(nlogn)\\)!
+A node representing a problem state at a given level \\(i\\) (parent node) will take about \\(n\\) work; we iterate through the entire sequence of integers. While the node for its only child at level \\(i + 1\\)—since we are recursively calling once—will take about \\(n/2\\) work. Thus, we can conclude that the overall work of our Contraction approach is dominated by the root node, resulting in an \\(O(n)\\) work complexity. A lot better than \\(O(nlogn)\\)!
 
 ### Why does work efficiency matter in parallel algorithms?
 
@@ -187,7 +187,7 @@ A node representing a problem state at a given level \\(i\\) (parent node) will 
 Quick reminder: Work refers to the total number of steps needed for sequential execution. Span, on the other hand, is the longest chain of dependent steps when executed in parallel, assuming infinite processors. Both can be upper-bounded with asymptotic analysis.
 {{< /alert >}}
 
-A common question that may arise is why work efficiency matters when the focus is on parallel execution. Implementing `reduce` using both DnC and Contraction yields a \\(O(logn)\\) Span, so does the choice between the two matter?
+A common question that may arise is why Work efficiency matters when the focus is on parallel execution. Implementing `reduce` using both DnC and Contraction yields a \\(O(logn)\\) Span, so does the choice between the two matter?
 
 The distinction lies in efficiency and resource constraints. Span's assumption of infinite processors is often unrealistic; we will not always have a processor available to execute a computation for a problem/subproblem. Additionally, DnC can incur extra overhead by generating multiple subproblems, whereas Contraction focuses on solving a single, reduced subproblem. For more on the practical limitations of parallel algorithms, see my earlier [blog post](../fifth_post/).
 
