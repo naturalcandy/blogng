@@ -78,7 +78,7 @@ This implementation of this algorithim in C++ looks something like this:
 
 ```cpp
 template <typename T, typename Func>
-T reduceContract(Func f, T id, const std::vector<T>& a) {
+T reduce_contract(Func f, T id, const std::vector<T>& a) {
     if (a.size() == 1) {
         //directly retrieve our answer
         return a[0];
@@ -95,18 +95,18 @@ T reduceContract(Func f, T id, const std::vector<T>& a) {
             }
         }
         //recursively compute our subproblem P'
-        return reduceContract(f, id, b);
+        return reduce_contract(f, id, b);
     }
 }
 
 int main() {
     auto add = [](int a, int b) { return a + b; };
     std::vector<int> vec = {1, 2, 3, 4, 5};
-    int result = reduceContract(add, 0, vec);
+    int result = reduce_contract(add, 0, vec);
 }
 ```
 
-At every level of recursion we are halving our problem size due to our consecutive pairing of elements until we end up 'reducing' to our result. Since addition is associative and has an identity it does not matter the order in which we pair elements nor does it matter if if the number of elements in our vector is even or odd. 
+At every level of recursion we are halving our problem size due to our consecutive pairing of elements until we end up 'reducing' to our result. Since addition is associative and has an identity it does not matter the order in which we pair elements nor does it matter if if the number of elements in our vector is even or odd.
 
 ## Contraction Vs. General Divide and Conquer?
 
@@ -132,7 +132,7 @@ Let's take a look at the general DnC approach for implementing our `reduce`:
 
 ```cpp
 template <typename T, typename Func>
-T reduceDnC(Func f, T id, const std::vector<T>& a, size_t start, size_t end) {
+T reduce_dnc(Func f, T id, const std::vector<T>& a, size_t start, size_t end) {
     // Base case: If the range contains only one element, return it.
     if (end - start == 1) {
         return a[start];
@@ -147,8 +147,8 @@ T reduceDnC(Func f, T id, const std::vector<T>& a, size_t start, size_t end) {
     size_t mid = start + (end - start) / 2;
 
     // Conquer step: Recursively solve the subproblems.
-    T left = reduceDnC(f, id, a, start, mid);
-    T right = reduceDnC(f, id, a, mid, end);
+    T left = reduce_dnc(f, id, a, start, mid);
+    T right = reduce_dnc(f, id, a, mid, end);
 
     // Combine step: Combine the solutions of the subproblems.
     return f(left, right);
@@ -159,7 +159,7 @@ As you can see, in our DnC approach we divide a problem into multiple subproblem
 
 ### Work Complexity Analysis
 
-The Work recurrence for `reduceDnC` given an input size of \\(n\\) looks something like this:
+The Work recurrence for `reduce_dnc` given an input size of \\(n\\) looks something like this:
 $$
 W(n) = 2 * W(n / 2) + c_k
 $$
@@ -169,7 +169,7 @@ A node representing a problem state at a given level \\(i\\) (parent node) will 
 
 Given we are halving our input size at every recursive level we will have \\(logn\\) levels of recursion. At each level we will have \\(2^i\\) instances of our problem with each of them being size \\(n/2^i\\). Thus the cost of one level is: \\(2^i * n/2^i = n\\). Note that we have \\(logn\\) levels with each level costing about \\(n\\): the overall work complexity is in \\(O(nlogn)\\).
 
-The Work recurrence for `reduceContract` given an input size of \\(n\\) looks something like this:
+The Work recurrence for `reduce_contract` given an input size of \\(n\\) looks something like this:
 
 $$
 W(n) = W(n / 2) + O(n) + c_k \\\
