@@ -128,7 +128,7 @@ Contraction is a more specialized version of a DnC algorithm. The core essence o
     * DnC approach may not be work efficient if the 'division' and 'combination' steps are costly.
     * Contraction approach is  more work-efficient if it reduces the problem size geometrically and the contraction and expansion steps are efficient.
 
-Let's take a look at the general approach to the DnC approach for implementing our `reduce`:
+Let's take a look at the general DnC approach for implementing our `reduce`:
 
 ```cpp
 template <typename T, typename Func>
