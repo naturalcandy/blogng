@@ -77,6 +77,8 @@ $$
 This implementation of this algorithim in C++ looks something like this:
 
 ```cpp
+#include <omp.h>
+
 template <typename T, typename Func>
 T reduce_contract(Func f, T id, const std::vector<T>& a) {
     if (a.size() == 1) {
@@ -84,17 +86,19 @@ T reduce_contract(Func f, T id, const std::vector<T>& a) {
         return a[0];
     } else {
         //we will transform problem P into a subproblem P'
-        std::vector<T> b;
+        std::vector<T> b(a.size() / 2 + a.size() % 2);
+
+        // Parallelize the loop
+        #pragma omp parallel for
         for (size_t i = 0; i < a.size(); i += 2) {
-            //apply our function to consecutive elements. 
             if (i + 1 < a.size()) {
-                b.push_back(f(a[i], a[i + 1]));
+                //apply our function to consecutive elements. 
+                b[i/2] = f(a[i], a[i + 1]);
             } else {
                 //uneven vector size case, combine element with identity
-                b.push_back(f(a[i], id));  
+                b[i/2] = f(a[i], id);
             }
         }
-        //recursively compute our subproblem P'
         return reduce_contract(f, id, b);
     }
 }
@@ -106,7 +110,9 @@ int main() {
 }
 ```
 
-At every level of recursion we are halving our problem size due to our consecutive pairing of elements until we end up 'reducing' to our result. Since addition is associative and has an identity it does not matter the order in which we pair elements nor does it matter if if the number of elements in our vector is even or odd.
+The `#pragma omp parallel for` directive tells the compiler to parallelize our for loop which we use to create our problem \\(P'\\). With this directive, OpenMP will distribute iterations of the loop across multiple threads, processing pairs from the sequence  concurrently. Inside the loop, consecutive elements from `a` are processed with the function \\(f\\), and the result is stored in `b`.
+
+At every level of recursion we are halving our problem size due to our consecutive pairing of elements until we end up 'reducing' to our result. Since addition is associative and has an identity it does not matter the order in which we pair elements nor does it matter if if the number of elements in our sequence is even or odd.
 
 ## Contraction Vs. General Divide and Conquer?
 
