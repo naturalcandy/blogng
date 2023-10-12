@@ -46,7 +46,7 @@ T reduce(Func f, const std::vector<T>& vec, T bc) {
 }
 ```
 
-Pretty straightforward, right? We begin with our default base-case value (which would be \\(0\\) as \\(0\\) is the identity of the addition operation). We then iterate through the sequence and accumulate our result. Since we perform a single pass through the entire sequence we know the Work (total number of steps performed assuming sequential execution) is \\(O(n)\\). And the Span (the longest chain of dependent steps when executed in parallel, assuming infinite processors), is also \\(O(n)\\), given we cannot apply any parallelism with this iterative approach.
+Pretty straightforward, right? We begin with our default base-case value. We then iterate through the sequence and accumulate our result. Since we perform a single pass through the entire sequence we know the Work (total number of steps performed assuming sequential execution) is \\(O(n)\\). And the Span (the longest chain of dependent steps when executed in parallel, assuming infinite processors), is also \\(O(n)\\), given we cannot apply any parallelism with this iterative approach.
 
 ### What are the motivations for contraction?
 
