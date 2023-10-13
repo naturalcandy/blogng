@@ -151,10 +151,20 @@ T reduce_dnc(Func f, T id, const std::vector<T>& a, size_t start, size_t end) {
 
     // Divide step: Find the middle of the range.
     size_t mid = start + (end - start) / 2;
+    T left, right;
 
     // Conquer step: Recursively solve the subproblems.
-    T left = reduce_dnc(f, id, a, start, mid);
-    T right = reduce_dnc(f, id, a, mid, end);
+    #pragma omp task shared(left, a, f, id) firstprivate(start, mid)
+    {
+        left = reduce_dnc(f, id, a, start, mid);
+    }
+
+    #pragma omp task shared(right, a, f, id) firstprivate(mid, end)
+    {
+        right = reduce_dnc(f, id, a, mid, end);
+    }
+
+    #pragma omp taskwait
 
     // Combine step: Combine the solutions of the subproblems.
     return f(left, right);
